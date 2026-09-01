@@ -18,7 +18,7 @@ order / stock change  →  event  →  async advisor (AI, rule-based fallback)
 | Layer | Choice |
 | --- | --- |
 | Backend | Java 21, Spring Boot 3.5, Maven, Spring Data JPA, Bean Validation, H2 (in-memory) |
-| LLM | Groq + `openai/gpt-oss-20b` (replacement for retired `llama-3.1-8b-instant`) |
+| LLM | Groq + `openai/gpt-oss-20b` |
 | Frontend | React 18 + Vite |
 
 ## Architecture
