@@ -136,7 +136,27 @@ public class SuggestionService {
                 saved.getId(), product.getId(), trigger, saved.getCurrentPrice(),
                 saved.getRecommendedPrice(), saved.getDirection(), saved.getConfidence(),
                 saved.getGeneratedBy());
+
+        // The seed leaves an INITIAL card on PRD-003 so the console is not empty at boot. When the
+        // real inventory-low / spike path later queues its own pricing suggestion, that INITIAL
+        // card is stale - and if the seed call fell back to rules while the live call used AI,
+        // the queue showed both engines for the same product. Auto-triggered answers supersede it.
+        if (trigger.isAutoTriggered()) {
+            dismissPendingInitialPricing(product);
+        }
+
         return saved;
+    }
+
+    private void dismissPendingInitialPricing(Product product) {
+        List<PricingSuggestion> stale = pricingSuggestions.findByProductIdAndTriggerReasonAndStatus(
+                product.getId(), TriggerReason.INITIAL, SuggestionStatus.PENDING);
+        for (PricingSuggestion initial : stale) {
+            initial.decide(SuggestionStatus.REJECTED);
+            log.info("Superseded seeded INITIAL pricing suggestion {} for {} after an auto-triggered recommendation",
+                    initial.getId(), product.getId());
+        }
+        settlePriceReview(product);
     }
 
     private ReorderSuggestion generateReorder(Product product, TriggerReason trigger) {

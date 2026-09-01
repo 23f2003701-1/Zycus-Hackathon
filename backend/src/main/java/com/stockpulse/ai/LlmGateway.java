@@ -288,8 +288,11 @@ public class LlmGateway {
             body.put("include_reasoning", false);
         }
 
-        if (requestJsonMode) {
-            // Groq honours this for compatible chat models and it removes most prose-around-JSON failures.
+        if (requestJsonMode && !isGptOssModel(properties.getModel())) {
+            // Groq honours this for compatible chat models and it removes most prose-around-JSON
+            // failures. gpt-oss is a reasoning model: forcing json_object often yields an empty
+            // content field (budget spent on hidden chain-of-thought), which made every call look
+            // like an AI failure and fall back to rules — so the console showed both engines.
             body.put("response_format", Map.of("type", "json_object"));
         }
         return body;

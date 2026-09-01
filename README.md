@@ -110,9 +110,10 @@ Console: `http://localhost:5173`.
 
 ### Demo in the console (under 5 minutes)
 
-1. Open the console — `PRD-003` already has an initial price suggestion waiting.
+1. Open the console — `PRD-003` may already have an initial price suggestion waiting (demo seed).
 2. On the catalog, click **Sell 1** on `Organic Cotton T-Shirt` (`PRD-003`). Stock is already below
-   threshold; the agentic loop queues inventory-low pricing + reorder suggestions (poll ~4s).
+   threshold; the agentic loop queues inventory-low pricing + reorder suggestions (poll ~4s). The
+   seeded initial card is superseded so you are not left with a Rules card next to a new AI card.
 3. In **Awaiting approval**, read the reasoning, then **Accept & publish price**.
 4. Optional: click **Ask live** on any row to watch the model stream its reasoning over SSE.
 5. Optional spike path: **Sell 5** / enough units on `Hoodie — Heather Grey` (`PRD-008`) until
