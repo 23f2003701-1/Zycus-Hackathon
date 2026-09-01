@@ -1,0 +1,35 @@
+# --- Secrets: the LLM API key must never be committed ---
+.env
+.env.*
+*.pem
+application-local.properties
+
+# --- Java / Maven ---
+target/
+!.mvn/wrapper/maven-wrapper.jar
+*.class
+*.log
+
+# --- Node / React ---
+node_modules/
+dist/
+dist-ssr/
+.vite/
+*.local
+
+# --- IDE ---
+.idea/
+.vscode/
+*.iml
+.settings/
+.classpath
+.project
+
+# --- OS ---
+Thumbs.db
+.DS_Store
+
+# --- The hackathon brief itself, not part of the deliverable ---
+stockpulse-brief*.html
+
+notes/
